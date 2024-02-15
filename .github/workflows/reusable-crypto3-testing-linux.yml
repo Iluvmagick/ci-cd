@@ -140,7 +140,7 @@ jobs:
         run: |
           # Parsing .gitmodules to find the path of the submodule repository.
           submodule_path=$(git config --file .gitmodules --get-regexp path | awk -v repo_name="${{ github.event.repository.name }}" '$0 ~ "submodule\\."repo_name"\\.path" { sub(/.*path /, ""); print }')
-          echo "Submodule path is $submodule_path"
+          echo "Submodule path is ${submodule_path:-$GITHUB_WORKSPACE/libs/${{ github.event.repository.name }}}"
           echo "submodule-path=$submodule_path" >> $GITHUB_OUTPUT
 
       - name: Checkout current repository as umbrella submodule lib
